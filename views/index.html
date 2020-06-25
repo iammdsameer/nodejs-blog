@@ -1,6 +1,4 @@
-{% extends 'base.html' %} {% block content %} {% block styles %}
-<link rel="stylesheet" href="/styles.css" />
-{% endblock %}
+{% extends 'base.html' %} {% block content %}
 <div class="container">
   <div class="row">
     <div class="col-4">
@@ -14,6 +12,7 @@
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             name="title"
+            required
           />
         </div>
         <div class="form-group">
@@ -23,6 +22,7 @@
             name="teaser"
             class="form-control"
             id="exampleInputPassword1"
+            required
           />
         </div>
         <div class="form-group">
@@ -32,6 +32,7 @@
             id="exampleFormControlTextarea1"
             rows="3"
             name="content"
+            required
           ></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Post</button>
@@ -45,7 +46,9 @@
           <div class="card-body">
             <h5 class="card-title">{{ blog.title }}</h5>
             <p class="card-text">{{ blog.teaser }}</p>
-            <a href="#" class="btn btn-secondary">Read More</a>
+            <a href="/blogs/post/{{ blog._id }}" class="btn btn-secondary"
+              >Read More</a
+            >
           </div>
         </div>
         <br />

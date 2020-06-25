@@ -41,3 +41,15 @@ app.post("/blogs", (req, res) => {
     .then(res.redirect("/blogs"))
     .catch((err) => console.log(err));
 });
+
+app.get("/blogs/post/:id", (req, res) => {
+  Blog.findById(req.params.id)
+    .then((blog) => res.render("post.html", { blog }))
+    .catch((err) => console.log(err));
+});
+
+app.delete("/blogs/post/:id", (req, res) => {
+  Blog.findByIdAndDelete(req.params.id)
+    .then((result) => res.json({ redirect: "/blogs" }))
+    .catch((err) => console.log(err));
+});

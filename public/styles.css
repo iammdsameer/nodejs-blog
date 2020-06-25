@@ -5,3 +5,17 @@ body {
 h3 {
   margin: 2rem 0;
 }
+
+textarea {
+  height: 150px !important;
+}
+
+.container {
+  position: relative;
+}
+
+.del-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

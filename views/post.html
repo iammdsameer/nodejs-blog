@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-5">
+  <h3>{{ blog.title }}</h3>
+  <small>{{ blog.createdAt }}</small>
+  <p>{{ blog.content }}</p>
+  <a
+    data-doc="{{ blog._id }}"
+    type="button"
+    class="del-btn text-light btn btn-danger"
+    >Delete</a
+  >
+</div>
+{% endblock %} {% block script %}
+
+<script>
+  const remove = document.querySelector(".del-btn");
+  remove.addEventListener("click", () => {
+    const endpoint = `/blogs/post/${remove.dataset.doc}`;
+    fetch(endpoint, { method: "DELETE" })
+      .then((res) => res.json())
+      .then((data) => (window.location.href = data.redirect))
+      .catch((err) => console.log(err));
+  });
+</script>
+
+{% endblock %}
