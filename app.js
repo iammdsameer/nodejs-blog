@@ -11,6 +11,7 @@ require("dotenv").config();
 nunjucks.configure("views", { autoescape: true, express: app });
 
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
 mongoose
   .connect(process.env.DB_URI, {
@@ -26,21 +27,17 @@ app.get("/", (req, res) => {
 
 app.get("/blogs", (req, res) => {
   Blog.find()
+    .sort({ createdAt: -1 })
     .then((blogs) => {
       res.render("index.html", { title: "Blogs", blogs });
     })
     .catch((err) => console.log(err));
 });
 
-app.get("/add", (req, res) => {
-  const newBlog = new Blog({
-    title: "Namaste Nepal",
-    teaser: "Nepal is beautiful",
-    content:
-      "Nepal is ... oh my god... not getting words that suits it better..",
-  });
+app.post("/blogs", (req, res) => {
+  const newBlog = new Blog(req.body);
   newBlog
     .save()
-    .then((result) => res.send(result))
+    .then(res.redirect("/blogs"))
     .catch((err) => console.log(err));
 });
