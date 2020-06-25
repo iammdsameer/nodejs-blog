@@ -3,6 +3,9 @@ const nunjucks = require("nunjucks");
 const app = express();
 const mongoose = require("mongoose");
 
+// models
+const Blog = require("./models/blog");
+
 require("dotenv").config();
 
 nunjucks.configure("views", { autoescape: true, express: app });
@@ -22,5 +25,22 @@ app.get("/", (req, res) => {
 });
 
 app.get("/blogs", (req, res) => {
-  res.render("index.html", { title: "Blogs" });
+  Blog.find()
+    .then((blogs) => {
+      res.render("index.html", { title: "Blogs", blogs });
+    })
+    .catch((err) => console.log(err));
+});
+
+app.get("/add", (req, res) => {
+  const newBlog = new Blog({
+    title: "Namaste Nepal",
+    teaser: "Nepal is beautiful",
+    content:
+      "Nepal is ... oh my god... not getting words that suits it better..",
+  });
+  newBlog
+    .save()
+    .then((result) => res.send(result))
+    .catch((err) => console.log(err));
 });
