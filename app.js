@@ -3,8 +3,7 @@ const nunjucks = require("nunjucks");
 const app = express();
 const mongoose = require("mongoose");
 
-// models
-const Blog = require("./models/blog");
+const blogRoutes = require("./routes/blogs");
 
 require("dotenv").config();
 
@@ -25,31 +24,5 @@ app.get("/", (req, res) => {
   res.redirect("/blogs");
 });
 
-app.get("/blogs", (req, res) => {
-  Blog.find()
-    .sort({ createdAt: -1 })
-    .then((blogs) => {
-      res.render("index.html", { title: "Blogs", blogs });
-    })
-    .catch((err) => console.log(err));
-});
-
-app.post("/blogs", (req, res) => {
-  const newBlog = new Blog(req.body);
-  newBlog
-    .save()
-    .then(res.redirect("/blogs"))
-    .catch((err) => console.log(err));
-});
-
-app.get("/blogs/post/:id", (req, res) => {
-  Blog.findById(req.params.id)
-    .then((blog) => res.render("post.html", { blog }))
-    .catch((err) => console.log(err));
-});
-
-app.delete("/blogs/post/:id", (req, res) => {
-  Blog.findByIdAndDelete(req.params.id)
-    .then((result) => res.json({ redirect: "/blogs" }))
-    .catch((err) => console.log(err));
-});
+// Blog Routes
+app.use("/blogs", blogRoutes);
