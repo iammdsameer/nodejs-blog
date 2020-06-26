@@ -9,13 +9,17 @@ A dynamic web app which remembers all the writes you ever wrote that hardly has 
 - Nunjucks
 - Mongoose (for mongodb connectivity)
 
-### Or
+### Setup Guide
 
-Forget all of this dependencies and just do a:
+Forget all of the above dependencies and just do a:
 
 ```sh
 npm install
+node app
 ```
+
+Then,
+Open up your browser and head over to: http://127.0.0.1:3300/
 
 This is all that is required to host an own blog server.
 

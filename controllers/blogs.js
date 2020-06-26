@@ -20,7 +20,7 @@ const create_blog = (req, res) => {
 
 const detail_blog = (req, res) => {
   Blog.findById(req.params.id)
-    .then((blog) => res.render("post.html", { blog }))
+    .then((blog) => res.render("post.html", { blog, title: "Post" }))
     .catch((err) => console.log(err));
 };
 
